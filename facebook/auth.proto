@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package facebook;
+
+service FacebookAuthService {
+    rpc ListAuthorizedUsers (Empty) returns (ListAuthorizedUsersResponse);
+    rpc AddAuthorizedUser (AddAuthorizedUserRequest) returns (AddAuthorizedUserResponse);
+    rpc RemoveAuthorizedUser (RemoveAuthorizedUserRequest) returns (Empty)
+}
+
+message Empty {}
+
+message AddAuthorizedUserRequest {
+    oneof auth_oneof {
+        string access_token = 1;
+        string oauth_code = 2;
+    }
+}
+
+message AddAuthorizedUserResponse {
+    User user = 1;
+}
+
+message RemoveAuthorizedUserRequest {
+    string user_id = 1;
+}
+
+message ListAuthorizedUsersResponse {
+    repeated User users = 1;
+}
+
+message User {
+    string id = 1;
+}
